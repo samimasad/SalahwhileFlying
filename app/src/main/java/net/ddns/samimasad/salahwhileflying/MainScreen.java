@@ -1,6 +1,10 @@
 package net.ddns.samimasad.salahwhileflying;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +19,48 @@ public class MainScreen extends AppCompatActivity {
     // Used to load the 'native-lib' library on application startup.
     static {
         System.loadLibrary("native-lib");
+    }
+
+
+    public void ClickCalc(View v)
+    {
+
+        //just calculate based on the values of the input the Salah time
+        //check teh validiy of the inputs
+        EditText lang = (EditText) findViewById(R.id.editText_Lang) ;
+        EditText lat = (EditText) findViewById(R.id.editText_Lat) ;
+        String lang_str = lang.getText().toString() ;
+        String lat_str = lat.getText().toString() ;
+        PrayTime pray  = new PrayTime();
+        
+
+
+        if (!lang_str.isEmpty() && !lat_str.isEmpty() ) {
+            double lang_value = Double.parseDouble(lang_str);
+            double lat_value = Double.parseDouble(lat_str);
+        }
+        else
+        {
+            AlertDialog.Builder builder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+            } else {
+                builder = new AlertDialog.Builder(this);
+            }
+            builder.setTitle("Wrong Entry")
+                    .setMessage("Please edit a valid location")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+
+
+
+
     }
 
     @Override
