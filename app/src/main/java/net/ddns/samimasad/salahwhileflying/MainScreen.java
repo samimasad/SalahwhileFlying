@@ -14,6 +14,11 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
 public class MainScreen extends AppCompatActivity {
 
     // Used to load the 'native-lib' library on application startup.
@@ -32,12 +37,48 @@ public class MainScreen extends AppCompatActivity {
         String lang_str = lang.getText().toString() ;
         String lat_str = lat.getText().toString() ;
         PrayTime pray  = new PrayTime();
-        
+        // Example of a call to a native method
+        TextView tv = (TextView) findViewById(R.id.sample_text);
+        int offset[] ={60,60,60,60,60,60,60};
+        Date now;
+
+
 
 
         if (!lang_str.isEmpty() && !lat_str.isEmpty() ) {
             double lang_value = Double.parseDouble(lang_str);
             double lat_value = Double.parseDouble(lat_str);
+            pray.setCalcMethod(pray.MWL); //MWL method to calculate the praying itme
+            pray.setAdjustHighLats(pray.AngleBased);
+            //todo make those settings dynamic with location
+
+            pray.setLat(lat_value);
+            pray.setLng(lang_value);
+
+            now = new Date();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(now);
+
+
+
+
+            TimeZone timez = TimeZone.getDefault();
+
+            double hoursDiff = (timez.getRawOffset() / 1000.0) / 3600;
+
+            if (timez.inDaylightTime(now)) {
+               pray.tune(offset);
+            }
+
+            ArrayList<String> salah_times = pray.getPrayerTimes(cal,lat_value,lang_value,hoursDiff);
+            ArrayList<String> salah_names = pray.getTimeNames();
+            String timesofSalah[] = salah_times.toString().split(" ") ;
+            String namesofSalah[] = salah_names.toString().split(" ") ;
+            //tv.setText(Text[0]+Text[1]+Text[2]);
+
+
+
+
         }
         else
         {
