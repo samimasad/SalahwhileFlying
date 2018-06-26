@@ -80,13 +80,13 @@ public class MainScreen extends AppCompatActivity {
             ArrayList<String> salah_times = pray.getPrayerTimes(cal,lat_value,lang_value,hoursDiff);
             ArrayList<String> salah_names = pray.getTimeNames();
             String tempstring = salah_times.toString();
-            tempstring = tempstring.replaceAll("[\\[\\]]","" ) ;
+            tempstring = tempstring.replaceAll("[\\[\\],]","" ) ;
             //String timesofSalah[] = salah_times.toString().split(" ");
             String timesofSalah[] = tempstring.split(" ");
 
 
             tempstring = salah_names.toString();
-            tempstring = tempstring.replaceAll("[\\[\\]]","" ) ;
+            tempstring = tempstring.replaceAll("[\\[\\],5050]","" ) ;
             String namesofSalah[] = tempstring.split(" ") ;
 
 
