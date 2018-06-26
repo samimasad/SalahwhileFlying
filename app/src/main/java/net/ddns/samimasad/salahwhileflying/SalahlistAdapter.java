@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 public class SalahlistAdapter extends RecyclerView.Adapter<SalahlistAdapter.ViewHolder>  {
 
-private String[] mDataset;
+
 private String[] Salahname ;
 private String[] Salahtimes ;
 
@@ -28,8 +28,9 @@ public static class ViewHolder extends RecyclerView.ViewHolder {
 }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public SalahlistAdapter(String[] myDataset) {
-        mDataset = myDataset;
+    public SalahlistAdapter(String[] times,String[] names) {
+        Salahname = names;
+        Salahtimes = times;
     }
 
     // Create new views (invoked by the layout manager)
@@ -50,13 +51,14 @@ public static class ViewHolder extends RecyclerView.ViewHolder {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        holder.textView_salah_time.setText(mDataset[0]);
+        holder.textView_salah_time.setText(Salahtimes[position]);
+        holder.textView_salah_name.setText(Salahname[position]);
 
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return Salahname.length;
     }
 }

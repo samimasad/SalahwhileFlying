@@ -79,10 +79,16 @@ public class MainScreen extends AppCompatActivity {
 
             ArrayList<String> salah_times = pray.getPrayerTimes(cal,lat_value,lang_value,hoursDiff);
             ArrayList<String> salah_names = pray.getTimeNames();
-            String tempstring = salah_times.toString().replaceAll("]//[","") ;
-            //tempstring = tempstring.replaceAll("]","") ;
-            String timesofSalah[] = salah_times.toString().split(" ").replaceAll("[]","") ;
-            String namesofSalah[] = salah_names.toString().split(" ") ;
+            String tempstring = salah_times.toString();
+            tempstring = tempstring.replaceAll("[\\[\\]]","" ) ;
+            //String timesofSalah[] = salah_times.toString().split(" ");
+            String timesofSalah[] = tempstring.split(" ");
+
+
+            tempstring = salah_names.toString();
+            tempstring = tempstring.replaceAll("[\\[\\]]","" ) ;
+            String namesofSalah[] = tempstring.split(" ") ;
+
 
             // specify an adapter (see also next example)
             RecyclerView list = (RecyclerView) findViewById(R.id.Salahlist);
@@ -92,7 +98,7 @@ public class MainScreen extends AppCompatActivity {
             mLayoutManager = new LinearLayoutManager(this);
             list.setLayoutManager(mLayoutManager);
 
-            mAdapter = new SalahlistAdapter(timesofSalah);
+            mAdapter = new SalahlistAdapter(timesofSalah,namesofSalah);
             list.setAdapter(mAdapter);
             //tv.setText(Text[0]+Text[1]+Text[2]);
 
