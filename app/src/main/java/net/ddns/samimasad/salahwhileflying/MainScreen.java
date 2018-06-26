@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +21,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+
+
 public class MainScreen extends AppCompatActivity {
 
     // Used to load the 'native-lib' library on application startup.
@@ -26,7 +30,7 @@ public class MainScreen extends AppCompatActivity {
         System.loadLibrary("native-lib");
     }
 
-
+    RecyclerView.Adapter mAdapter;
     public void ClickCalc(View v)
     {
 
@@ -38,7 +42,10 @@ public class MainScreen extends AppCompatActivity {
         String lat_str = lat.getText().toString() ;
         PrayTime pray  = new PrayTime();
         // Example of a call to a native method
-        TextView tv = (TextView) findViewById(R.id.sample_text);
+
+
+
+
         int offset[] ={60,60,60,60,60,60,60};
         Date now;
 
@@ -72,8 +79,21 @@ public class MainScreen extends AppCompatActivity {
 
             ArrayList<String> salah_times = pray.getPrayerTimes(cal,lat_value,lang_value,hoursDiff);
             ArrayList<String> salah_names = pray.getTimeNames();
-            String timesofSalah[] = salah_times.toString().split(" ") ;
+            String tempstring = salah_times.toString().replaceAll("]//[","") ;
+            //tempstring = tempstring.replaceAll("]","") ;
+            String timesofSalah[] = salah_times.toString().split(" ").replaceAll("[]","") ;
             String namesofSalah[] = salah_names.toString().split(" ") ;
+
+            // specify an adapter (see also next example)
+            RecyclerView list = (RecyclerView) findViewById(R.id.Salahlist);
+            // use a linear layout manager
+            RecyclerView.LayoutManager mLayoutManager;
+
+            mLayoutManager = new LinearLayoutManager(this);
+            list.setLayoutManager(mLayoutManager);
+
+            mAdapter = new SalahlistAdapter(timesofSalah);
+            list.setAdapter(mAdapter);
             //tv.setText(Text[0]+Text[1]+Text[2]);
 
 
@@ -111,14 +131,17 @@ public class MainScreen extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
+
+
+
 
         // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.sample_text);
