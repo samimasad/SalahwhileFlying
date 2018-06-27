@@ -2,6 +2,7 @@ package net.ddns.samimasad.salahwhileflying;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -101,6 +102,10 @@ public class MainScreen extends AppCompatActivity {
             mAdapter = new SalahlistAdapter(timesofSalah,namesofSalah);
             list.setAdapter(mAdapter);
             //tv.setText(Text[0]+Text[1]+Text[2]);
+
+            //now call the map acitivity
+            Intent intent = new Intent(this, MapsActivity.class);
+            startActivity(intent);
 
 
 
